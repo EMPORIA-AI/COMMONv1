@@ -1,6 +1,6 @@
 __header__ = """
 
-The AI's Marketplace (TAIM) <https://www.market.com.ai>
+The AI's Marketplace (TAIM) <https://www.emporia.ai>
 
 License (CC0-1.0) <https://spdx.org/licenses/CC0-1.0.html>
 
@@ -10,7 +10,7 @@ To the extent possible under law, Scott McCallum has waived all copyright
 and related or neighboring rights to [ TAIM ]. This work is published
 from <https://what3words.com/enablers.aromas.import> AU and SG.
 
-Commercial & Government entities must interact with ip@market.com.ai to
+Commercial & Government entities must interact with ip@emporia.ai to
 license the patents planned, pending and granted that this software
 embodies. Individuals, Public Educational and Public Health Institutions
 are irrevocably granted software/patent usage rights.
@@ -51,24 +51,25 @@ class Locate_APIv01X:
 @dataclass
 class Locate_DATAv01X:
     space_ids: List[str]
+    space_url: List[str]
 
 #
 #
 #
 
 @dataclass
-class Schema_APIv01X:
+class Setup_APIv01X:
     myversion: str  # the sdk version
-    myedition: str  # config | supply | demand | govern | observ
+    myedition: str  # config | supply | demand | trader | govern | observ
     timestamp: str  # iso8601 utc time just before request was sent
-    verifypem: str  # the brokers ecdsa verify key pem encoded
+    verifypem: str  # the brokers ecdsa verify key encoded
     id_market: str  # which instance does the sdk want
 
 @dataclass
-class Schema_DATAv01X:
+class Setup_DATAv01X:
     myversion: str  # the core version
     timestamp: str  # iso8601 utc time just before reply was sent
-    verifypem: str  # the markets ecdsa verify key pem encoded
+    verifypem: str  # the markets ecdsa verify key encoded
     id_handle: str  # id for the identity this round
     next_path: str  # entry url; ie. /1v0/market/0.enter
 
@@ -100,20 +101,7 @@ class Rate:
 #
 #
 #
-
-@dataclass
-class Enter_APIv01X:
-    id_market: str
-    timestamp: str
-    id_handle: str
-    crossrates: List[Rate]
-
-@dataclass
-class Enter_DATAv01X:
-    timestamp: str
-    dwelltime: int
-    next_path: str  # next path or none to loop
-
+#
 
 @dataclass
 class Supply:
@@ -143,7 +131,7 @@ class Supply:
 #
 #
 #
-#
+
 
 
 @dataclass
@@ -177,12 +165,33 @@ class Demand:
 #
 #
 
+
+@dataclass
+class Enter_APIv01X:
+    id_market: str
+    timestamp: str
+    id_handle: str
+    crossrates: List[Rate]
+
+
+@dataclass
+class Enter_DATAv01X:
+    timestamp: str
+    dwelltime: int
+    next_path: str  # next path or none to loop
+
+#
+#
+#
+#
+
 @dataclass
 class Offer_APIv01X:
     timestamp: str
     id_handle: str
     demand: List[Demand]
     supply: List[Supply]
+    random: List[Supply]
 
 @dataclass
 class Offer_DATAv01X:
@@ -190,6 +199,22 @@ class Offer_DATAv01X:
     dwelltime: int
 
 #
+#
+#
+#
+
+@dataclass
+class Think_APIv01X:
+    timestamp: str
+    id_handle: str
+
+@dataclass
+class Think_DATAv01X:
+    timestamp: str
+    dwelltime: int
+    random: List[Supply]
+
+
 #
 #
 #
@@ -214,6 +239,8 @@ class Settle:
 class Leave_APIv01X:
     timestamp: str
     id_handle: str
+    random: List[Demand]
+    settle: List[Settle]
 
 @dataclass
 class Leave_DATAv01X:
@@ -221,6 +248,7 @@ class Leave_DATAv01X:
     sharding: str = ""
     demand: Optional[List[Demand]] = None
     supply: Optional[List[Supply]] = None
+    random: Optional[List[Supply]] = None
     settle: Optional[List[Settle]] = None
 
 #
@@ -233,16 +261,16 @@ class Manage_APIv01X:
     action: Optional[Dict] = None
     genres: Optional[List[Genre]] = None
     wheres: Optional[List[Where]] = None
+    spaces: Optional[List[Space]] = None
     things: Optional[List[Thing]] = None
     alters: Optional[List[Alter]] = None
-    spaces: Optional[List[Space]] = None
 
 @dataclass
 class Manage_DATAv01X:
     result: Optional[Dict] = None
     genres: Optional[List[Genre]] = None
     wheres: Optional[List[Where]] = None
+    spaces: Optional[List[Space]] = None
     things: Optional[List[Thing]] = None
     alters: Optional[List[Alter]] = None
-    spaces: Optional[List[Space]] = None
 

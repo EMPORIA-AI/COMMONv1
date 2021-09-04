@@ -1,6 +1,6 @@
 __header__ = """
 
-The AI's Marketplace (TAIM) <https://www.market.com.ai>
+The AI's Marketplace (TAIM) <https://www.emporia.ai>
 
 License (CC0-1.0) <https://spdx.org/licenses/CC0-1.0.html>
 
@@ -10,7 +10,7 @@ To the extent possible under law, Scott McCallum has waived all copyright
 and related or neighboring rights to [ TAIM ]. This work is published
 from <https://what3words.com/enablers.aromas.import> AU and SG.
 
-Commercial & Government entities must interact with ip@market.com.ai to
+Commercial & Government entities must interact with ip@emporia.ai to
 license the patents planned, pending and granted that this software
 embodies. Individuals, Public Educational and Public Health Institutions
 are irrevocably granted software/patent usage rights.
