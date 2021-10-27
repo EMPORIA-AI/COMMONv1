@@ -28,7 +28,7 @@ class Locate_APIv01X:
     id_genres: List[str]
 
 @dataclass
-class Locate_DATAv01X:
+class Locate_v01X:
     engines: List[str]
 
 #
@@ -44,7 +44,7 @@ class Setup_APIv01X:
     spaces_id: str  # which instance does the sdk want
 
 @dataclass
-class Setup_DATAv01X:
+class Setup_v01X:
     myversion: str  # the core version
     timestamp: str  # iso8601 utc time
     verifykey: str  # the markets ecdsa verify key
@@ -152,7 +152,7 @@ class Enter_APIv01X:
 
 
 @dataclass
-class Enter_DATAv01X:
+class Enter_v01X:
     timestamp: str
     id_handle: str
     dwelltime: int
@@ -171,7 +171,7 @@ class Offer_APIv01X:
     supply: List[Supply]
 
 @dataclass
-class Offer_DATAv01X:
+class Offer_v01X:
     timestamp: str
     dwelltime: int
 
@@ -186,7 +186,7 @@ class Think_APIv01X:
     id_handle: str
 
 @dataclass
-class Think_DATAv01X:
+class Think_v01X:
     timestamp: str
     dwelltime: int
 
@@ -217,7 +217,7 @@ class Leave_APIv01X:
     id_handle: str
 
 @dataclass
-class Leave_DATAv01X:
+class Leave_v01X:
     timestamp: str = ""
     demand: Optional[List[Demand]] = None
     supply: Optional[List[Supply]] = None
@@ -238,7 +238,7 @@ class Manage_APIv01X:
     alters: Optional[List[Alter]] = None
 
 @dataclass
-class Manage_DATAv01X:
+class Manage_v01X:
     result: Optional[Dict] = None
     genres: Optional[List[Genre]] = None
     wheres: Optional[List[Where]] = None
