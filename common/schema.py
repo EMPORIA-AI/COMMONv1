@@ -1,27 +1,8 @@
-__header__ = """
-
-The AI's Marketplace (TAIM) <https://www.emporia.ai>
-
-License (CC0-1.0) <https://spdx.org/licenses/CC0-1.0.html>
-
-Copyright (c) 12021 - 12021 HE, Scott.McCallum@HQ.UrbaneINTER.NET
-
-To the extent possible under law, Scott McCallum has waived all copyright
-and related or neighboring rights to [ TAIM ]. This work is published
-from <https://what3words.com/enablers.aromas.import> AU and SG.
-
-Commercial & Government entities must interact with ip@emporia.ai to
-license the patents planned, pending and granted that this software
-embodies. Individuals, Public Educational and Public Health Institutions
-are irrevocably granted software/patent usage rights.
-
-Lineage:
-
-  Mostly built on cubed4th + pydantic
-
-
-
-""" # __header__
+#!/usr/bin/env python3
+# -*- encoding: utf-8
+# SPDX-License-Identifier: CC0-1.0
+# Copyright (c) 12021 - 12021 HE, Emporia.AI Pte Ltd
+# See LICENSE.md for Additional Terms and Conditions
 
 from typing import Any, IO, Optional, List, Dict
 from pydantic.dataclasses import dataclass
@@ -45,13 +26,10 @@ from .alter import *
 class Locate_APIv01X:
     id_wheres: List[str]
     id_genres: List[str]
-    start: int = 0
-    count: int = 1000
 
 @dataclass
 class Locate_DATAv01X:
-    space_ids: List[str]
-    space_url: List[str]
+    engines: List[str]
 
 #
 #
@@ -62,16 +40,16 @@ class Setup_APIv01X:
     myversion: str  # the sdk version
     myedition: str  # config | supply | demand | trader | govern | observ
     timestamp: str  # iso8601 utc time just before request was sent
-    verifypem: str  # the brokers ecdsa verify key encoded
-    id_market: str  # which instance does the sdk want
+    verifykey: str  # the brokers ecdsa verify key encoded
+    spaces_id: str  # which instance does the sdk want
 
 @dataclass
 class Setup_DATAv01X:
     myversion: str  # the core version
-    timestamp: str  # iso8601 utc time just before reply was sent
-    verifypem: str  # the markets ecdsa verify key encoded
+    timestamp: str  # iso8601 utc time
+    verifykey: str  # the markets ecdsa verify key
     id_handle: str  # id for the identity this round
-    next_path: str  # entry url; ie. /1v0/market/0.enter
+    next_path: str  # entry url; ie. /1v0/engines/0.enter
 
 #
 # Price is separated out from the programs as they cannot look at or change
@@ -139,7 +117,7 @@ class Demand:
 
     """
 
-'offer_v1.0 abi
+'demand_v1.0 abi
 
 : where init-where ;
 
@@ -168,15 +146,15 @@ class Demand:
 
 @dataclass
 class Enter_APIv01X:
-    id_market: str
     timestamp: str
-    id_handle: str
-    crossrates: List[Rate]
+    spaces_id: str
+    crossrate: List[Rate]
 
 
 @dataclass
 class Enter_DATAv01X:
     timestamp: str
+    id_handle: str
     dwelltime: int
     next_path: str  # next path or none to loop
 
@@ -191,7 +169,6 @@ class Offer_APIv01X:
     id_handle: str
     demand: List[Demand]
     supply: List[Supply]
-    random: List[Supply]
 
 @dataclass
 class Offer_DATAv01X:
@@ -212,7 +189,6 @@ class Think_APIv01X:
 class Think_DATAv01X:
     timestamp: str
     dwelltime: int
-    random: List[Supply]
 
 
 #
@@ -239,16 +215,12 @@ class Settle:
 class Leave_APIv01X:
     timestamp: str
     id_handle: str
-    random: List[Demand]
-    settle: List[Settle]
 
 @dataclass
 class Leave_DATAv01X:
     timestamp: str = ""
-    sharding: str = ""
     demand: Optional[List[Demand]] = None
     supply: Optional[List[Supply]] = None
-    random: Optional[List[Supply]] = None
     settle: Optional[List[Settle]] = None
 
 #
