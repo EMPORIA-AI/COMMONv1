@@ -23,3 +23,7 @@ class ObjectBase(BaseModel):
         for object in objects:
             results.append(object)
         return results
+
+    def verify(self, persist):
+        return []
+

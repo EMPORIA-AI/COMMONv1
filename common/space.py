@@ -33,3 +33,23 @@ class Space(ObjectBase):
 
     program: str = ""
     storage: str = ""
+
+    def verify(self, tables):
+
+        results = []
+
+        if not self.id_genre == "":
+            if not self.id_genre in tables.genres:
+                results.append([self, "id_genre key not able to be resolved"])
+
+        if not self.id_where == "":
+            if not self.id_where in tables.wheres:
+                results.append([self, "id_where key not able to be resolved"])
+
+        return results
+
+
+
+
+
+
