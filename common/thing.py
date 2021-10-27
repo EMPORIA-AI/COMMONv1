@@ -11,7 +11,7 @@ import pendulum
 
 from .base import *
 
-@dataclass
+#@dataclass
 class Thing(ObjectBase):
 
     #

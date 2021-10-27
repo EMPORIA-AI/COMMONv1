@@ -5,11 +5,12 @@
 # See LICENSE.md for Additional Terms and Conditions
 
 from typing import Any, IO, Optional, List, Dict
+from pydantic import BaseModel
 from pydantic.dataclasses import dataclass
 from decimal import *
 import pendulum
 
-class ObjectBase:
+class ObjectBase(BaseModel):
 
     def locate(action, database, factory, obj_name, objects):
         results = []

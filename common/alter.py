@@ -17,7 +17,7 @@ from .base import *
 # buyer agrees to pay these edits.
 #
 
-@dataclass
+#@dataclass
 class Alter(ObjectBase):
 
     #

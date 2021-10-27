@@ -15,7 +15,7 @@ from .base import *
 # markets are managed as spaces where a combination of what and where.
 #
 
-@dataclass
+#@dataclass
 class Space(ObjectBase):
 
     """
