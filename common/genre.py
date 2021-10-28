@@ -19,7 +19,7 @@ class Genre(ObjectBase):
     #
     # : main
     # 'Drinks/Human major 'Energy/Sugar_Free minor
-    # ("Red Bull") brand 'ML unit 250 size 4 items
+    # ("Red Bull") brand 'ML unit 250 size 4 count
     # ;
     #
 
