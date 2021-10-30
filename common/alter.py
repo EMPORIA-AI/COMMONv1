@@ -5,9 +5,6 @@
 # See LICENSE.md for Additional Terms and Conditions
 
 from typing import Any, IO, Optional, List, Dict
-from pydantic.dataclasses import dataclass
-from decimal import *
-
 from .base import *
 
 #
@@ -16,7 +13,6 @@ from .base import *
 # buyer agrees to pay these edits.
 #
 
-#@dataclass
 class Alter(ObjectBase):
 
     #

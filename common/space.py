@@ -5,17 +5,12 @@
 # See LICENSE.md for Additional Terms and Conditions
 
 from typing import Any, IO, Optional, List, Dict
-from pydantic.dataclasses import dataclass
-from decimal import *
-import pendulum
-
 from .base import *
 
 #
 # markets are managed as spaces where a combination of what and where.
 #
 
-#@dataclass
 class Space(ObjectBase):
 
     """

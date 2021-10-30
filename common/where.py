@@ -11,7 +11,6 @@ import pendulum
 
 from .base import *
 
-#@dataclass
 class Where(ObjectBase):
 
     """
