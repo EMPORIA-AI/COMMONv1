@@ -10,6 +10,21 @@ from decimal import *
 import pendulum
 
 from .base import *
+from enum import Enum
+
+class Scope(Enum):
+    Galaxy = 1
+    Planet = 2
+    Country = 3
+    State = 4
+    City = 5
+    Suburb = 6
+
+scopes = []
+for scope in Scope:
+    scopes.append(str(scope)[6:])
+
+print("scopes = ", scopes)
 
 class Where(ObjectBase):
 
@@ -28,5 +43,22 @@ class Where(ObjectBase):
     acl: str = ""
     name: str = ""
     tags: str = ""
+    scope: str = ""
+    id_up: str = ""
     program: str = ""
     storage: str = ""
+
+    def verify(self, tables):
+
+        results = []
+
+        if not self.id_up == "":
+            if not self.id_up in tables.wheres:
+                results.append([self, "id_up key not able to be resolved"])
+
+        if not self.scope == "":
+            if not self.scope in scopes:
+                results.append([self, "scope is not on suppoted list"])
+
+        return results
+
