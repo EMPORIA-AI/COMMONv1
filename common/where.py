@@ -13,16 +13,20 @@ from .base import *
 from enum import Enum
 
 class Scope(Enum):
-    Galaxy = 1
-    Planet = 2
-    Country = 3
-    State = 4
-    City = 5
-    Suburb = 6
+    Galaxy = 0
+    Planet = 1
+    Country = 2
+    State = 3
+    City = 4
+    Suburb = 5
+    Street = 6
+    Building = 7
+    Apartment = 8
+    Individual = 9
 
-scopes = []
+scopes = {}
 for scope in Scope:
-    scopes.append(str(scope)[6:])
+    scopes[str(scope)[6:]] = scope
 
 print("scopes = ", scopes)
 

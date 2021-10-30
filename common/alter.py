@@ -38,5 +38,7 @@ class Alter(ObjectBase):
 
     vkey: str = ""
 
+    id_where: str = ""
+
     program: str = ""
     storage: str = ""
