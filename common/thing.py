@@ -30,7 +30,7 @@ class Thing(ObjectBase):
 
     vkey: str = ""
 
-    id_genre: str = ""
+    genre_id: str = ""
     rpc_json: str = ""
 
     program: str = ""

@@ -23,8 +23,8 @@ class Space(ObjectBase):
     name: str = ""
     tags: str = ""
 
-    id_genre: str = ""
-    id_where: str = ""
+    genre_id: str = ""
+    where_id: str = ""
 
     program: str = ""
     storage: str = ""
@@ -33,13 +33,13 @@ class Space(ObjectBase):
 
         results = []
 
-        if not self.id_genre == "":
-            if not self.id_genre in tables.genres:
-                results.append([self, "id_genre key not able to be resolved"])
+        if not self.genre_id == "":
+            if not self.genre_id in tables.genres:
+                results.append([self, "genre_id key not able to be resolved"])
 
-        if not self.id_where == "":
-            if not self.id_where in tables.wheres:
-                results.append([self, "id_where key not able to be resolved"])
+        if not self.where_id == "":
+            if not self.where_id in tables.wheres:
+                results.append([self, "where_id key not able to be resolved"])
 
         return results
 

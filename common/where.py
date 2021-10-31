@@ -28,8 +28,6 @@ scopes = {}
 for scope in Scope:
     scopes[str(scope)[6:]] = scope
 
-print("scopes = ", scopes)
-
 class Where(ObjectBase):
 
     """
@@ -37,7 +35,7 @@ class Where(ObjectBase):
 'where_1.0 abi
 
 : main
-'AU country 'NSW state 'Coolamon local
+'AU country 'NSW state 'Coolamon city
 '///enablers.aromas.import w3w
 ;
 
@@ -45,10 +43,11 @@ class Where(ObjectBase):
 
     id: str = ""
     acl: str = ""
+    w3w: str = ""
     name: str = ""
     tags: str = ""
     scope: str = ""
-    id_up: str = ""
+    up_id: str = ""
     program: str = ""
     storage: str = ""
 
@@ -56,9 +55,9 @@ class Where(ObjectBase):
 
         results = []
 
-        if not self.id_up == "":
-            if not self.id_up in tables.wheres:
-                results.append([self, "id_up key not able to be resolved"])
+        if not self.up_id == "":
+            if not self.up_id in tables.wheres:
+                results.append([self, "up_id key not able to be resolved"])
 
         if not self.scope == "":
             if not self.scope in scopes:

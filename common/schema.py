@@ -23,12 +23,12 @@ from .alter import *
 # to achieve performance and saleability goals.
 
 @dataclass
-class Locate_APIv01X:
-    id_wheres: List[str]
-    id_genres: List[str]
+class Locate_API:
+    where_ids: List[str]
+    genre_ids: List[str]
 
 @dataclass
-class Locate_v01X:
+class Locate:
     engines: List[str]
 
 #
@@ -36,20 +36,20 @@ class Locate_v01X:
 #
 
 @dataclass
-class Setup_APIv01X:
-    myversion: str  # the sdk version
-    myedition: str  # config | supply | demand | trader | govern | observ
-    timestamp: str  # iso8601 utc time just before request was sent
-    verifykey: str  # the brokers ecdsa verify key encoded
-    spaces_id: str  # which instance does the sdk want
+class Setup_API:
+    clock: str  # iso8601 utc time just before request was sent
+    version: str  # the sdk version
+    edition: str  # config | supply | demand | trader | govern | observ
+    id_space: str  # which instance does the sdk want
+    vkey: str  # the brokers ecdsa verify key encoded
 
 @dataclass
-class Setup_v01X:
-    myversion: str  # the core version
-    timestamp: str  # iso8601 utc time
-    verifykey: str  # the markets ecdsa verify key
-    id_handle: str  # id for the identity this round
-    next_path: str  # entry url; ie. /1v0/engines/0.enter
+class Setup:
+    clock: str  # iso8601 utc time
+    handle: str  # id for the identity this round
+    version: str  # the core version
+    dwell_ms: int  # how long should the client wait
+    vkey: str  # the markets ecdsa verify key
 
 #
 # Price is separated out from the programs as they cannot look at or change
@@ -99,8 +99,8 @@ class Supply:
 
     price: Optional[Price] = None
 
-    id_thing: str = ""  # the id of the thing being sold
-    id_where: str = ""  # where is item being sold from
+    thing_id: str = ""  # the id of the thing being sold
+    where_id: str = ""  # where is item being sold from
 
     program: str = ""
     storage: str = ""
@@ -131,7 +131,7 @@ class Demand:
     acl: str = ""
     vkey: str = ""  # ecdsa verifying key for later use
 
-    id_where: str = ""  # location for taxes/delivery/availability
+    where_id: str = ""  # location for taxes/delivery/availability
 
     price: Optional[Price] = None  # how much to pay if program says buy
 
@@ -145,18 +145,16 @@ class Demand:
 
 
 @dataclass
-class Enter_APIv01X:
-    timestamp: str
-    spaces_id: str
+class Enter_API:
+    clock: str
+    handle: str
     crossrate: List[Rate]
 
 
 @dataclass
-class Enter_v01X:
-    timestamp: str
-    id_handle: str
-    dwelltime: int
-    next_path: str  # next path or none to loop
+class Enter:
+    clock: str
+    dwell_ms: int
 
 #
 #
@@ -164,16 +162,16 @@ class Enter_v01X:
 #
 
 @dataclass
-class Offer_APIv01X:
-    timestamp: str
-    id_handle: str
+class Offer_API:
+    clock: str
+    handle: str
     demand: List[Demand]
     supply: List[Supply]
 
 @dataclass
-class Offer_v01X:
-    timestamp: str
-    dwelltime: int
+class Offer:
+    clock: str
+    dwell_ms: int
 
 #
 #
@@ -181,14 +179,14 @@ class Offer_v01X:
 #
 
 @dataclass
-class Think_APIv01X:
-    timestamp: str
-    id_handle: str
+class Think_API:
+    clock: str
+    handle: str
 
 @dataclass
-class Think_v01X:
-    timestamp: str
-    dwelltime: int
+class Think:
+    clock: str
+    dwell_ms: int
 
 
 #
@@ -199,9 +197,9 @@ class Think_v01X:
 @dataclass
 class Settle:
     supply_id: str = ""
-    supply_diags: Optional[dict] = None
+    supply_diag: Optional[dict] = None
     demand_id: str = ""
-    demand_diags: Optional[dict] = None
+    demand_diag: Optional[dict] = None
     alters: Optional[List[Alter]] = None
 
 #
@@ -212,13 +210,14 @@ class Settle:
 #
 
 @dataclass
-class Leave_APIv01X:
-    timestamp: str
-    id_handle: str
+class Leave_API:
+    clock: str
+    handle: str
 
 @dataclass
-class Leave_v01X:
-    timestamp: str = ""
+class Leave:
+    clock: str
+    dwell_ms: int
     demand: Optional[List[Demand]] = None
     supply: Optional[List[Supply]] = None
     settle: Optional[List[Settle]] = None
@@ -229,7 +228,7 @@ class Leave_v01X:
 #
 
 @dataclass
-class Manage_APIv01X:
+class Manage_API:
     action: Optional[Dict] = None
     genres: Optional[List[Genre]] = None
     wheres: Optional[List[Where]] = None
@@ -238,7 +237,7 @@ class Manage_APIv01X:
     alters: Optional[List[Alter]] = None
 
 @dataclass
-class Manage_v01X:
+class Manage:
     result: Optional[Dict] = None
     genres: Optional[List[Genre]] = None
     wheres: Optional[List[Where]] = None
