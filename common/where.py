@@ -47,7 +47,9 @@ class Where(ObjectBase):
     name: str = ""
     tags: str = ""
     scope: str = ""
-    up_id: str = ""
+
+    under_id: str = ""
+
     program: str = ""
     storage: str = ""
 
@@ -55,9 +57,9 @@ class Where(ObjectBase):
 
         results = []
 
-        if not self.up_id == "":
-            if not self.up_id in tables.wheres:
-                results.append([self, "up_id key not able to be resolved"])
+        if not self.under_id == "":
+            if not self.under_id in tables.wheres:
+                results.append([self, "under_id key not able to be resolved"])
 
         if not self.scope == "":
             if not self.scope in scopes:

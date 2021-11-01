@@ -11,6 +11,7 @@ import pendulum
 
 from .base import *
 
+from .value import *
 from .where import *
 from .genre import *
 from .space import *
@@ -40,7 +41,7 @@ class Setup_API:
     clock: str  # iso8601 utc time just before request was sent
     version: str  # the sdk version
     edition: str  # config | supply | demand | trader | govern | observ
-    id_space: str  # which instance does the sdk want
+    space_id: str  # which instance does the sdk want
     vkey: str  # the brokers ecdsa verify key encoded
 
 @dataclass
@@ -230,6 +231,7 @@ class Leave:
 @dataclass
 class Manage_API:
     action: Optional[Dict] = None
+    values: Optional[List[Value]] = None
     genres: Optional[List[Genre]] = None
     wheres: Optional[List[Where]] = None
     spaces: Optional[List[Space]] = None
@@ -239,6 +241,7 @@ class Manage_API:
 @dataclass
 class Manage:
     result: Optional[Dict] = None
+    values: Optional[List[Value]] = None
     genres: Optional[List[Genre]] = None
     wheres: Optional[List[Where]] = None
     spaces: Optional[List[Space]] = None
