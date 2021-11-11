@@ -42,3 +42,6 @@ class Alter(ObjectBase):
 
     program: str = ""
     storage: str = ""
+
+    def get_letter(self):
+        return 'A'

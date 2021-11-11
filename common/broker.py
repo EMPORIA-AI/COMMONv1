@@ -13,7 +13,13 @@ from .base import *
 # buyer agrees to pay these edits.
 #
 
-class Value(ObjectBase):
+class Broker(ObjectBase):
+
+    #
+    # 'broker_v0.1 abi
+    #
+    # : main apply-alter ;
+    #
 
     """
 
@@ -25,8 +31,10 @@ class Value(ObjectBase):
     name: str = ""
     tags: str = ""
 
+    vkey: str = ""
+
     program: str = ""
     storage: str = ""
 
     def get_letter(self):
-        return 'V'
+        return 'B'

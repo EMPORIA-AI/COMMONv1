@@ -5,10 +5,6 @@
 # See LICENSE.md for Additional Terms and Conditions
 
 from typing import Any, IO, Optional, List, Dict
-from pydantic.dataclasses import dataclass
-from decimal import *
-import pendulum
-
 from .base import *
 
 class Thing(ObjectBase):
@@ -33,7 +29,12 @@ class Thing(ObjectBase):
     genre_id: str = ""
     rpc_json: str = ""
 
+    broker_id = ""
+    holder_id = ""
+
     program: str = ""
     storage: str = ""
 
+    def get_letter(self):
+        return 'T'
 

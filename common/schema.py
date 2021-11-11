@@ -4,10 +4,11 @@
 # Copyright (c) 12021 - 12021 HE, Emporia.AI Pte Ltd
 # See LICENSE.md for Additional Terms and Conditions
 
+import pendulum
+
 from typing import Any, IO, Optional, List, Dict
 from pydantic.dataclasses import dataclass
 from decimal import *
-import pendulum
 
 from .base import *
 
@@ -18,13 +19,15 @@ from .space import *
 from .thing import *
 from .alter import *
 
+from .broker import *
+
 # given parallel arrays of where the buyer is and the things they are needing
 # the locate server will return a list of the urls where those markets are
 # operating.  its expected that as the markets grow they will dynamically shard
 # to achieve performance and saleability goals.
 
 @dataclass
-class Locate_API:
+class Locate_DATA:
     where_ids: List[str]
     genre_ids: List[str]
 
@@ -37,20 +40,21 @@ class Locate:
 #
 
 @dataclass
-class Setup_API:
-    clock: str  # iso8601 utc time just before request was sent
-    version: str  # the sdk version
-    edition: str  # config | supply | demand | trader | govern | observ
-    space_id: str  # which instance does the sdk want
-    vkey: str  # the brokers ecdsa verify key encoded
+class Setup_DATA:
+    clock: str = "" # iso8601 utc time just before request was sent
+    version: str = ""  # the sdk version
+    edition: str = ""  # config | supply | demand | trader | govern | observ
+    space_id: str = ""  # which instance does the sdk want
+    broker_id: str = ""
+    vkey: str = "" # the brokers ecdsa verify key encoded
 
 @dataclass
 class Setup:
-    clock: str  # iso8601 utc time
-    handle: str  # id for the identity this round
-    version: str  # the core version
-    dwell_ms: int  # how long should the client wait
-    vkey: str  # the markets ecdsa verify key
+    clock: str = "" # iso8601 utc time
+    handle: str = "" # id for the identity this round
+    version: str = ""  # the core version
+    dwell_ms: int = 0  # how long should the client wait
+    vkey: str = ""  # the markets ecdsa verify key
 
 #
 # Price is separated out from the programs as they cannot look at or change
@@ -146,16 +150,16 @@ class Demand:
 
 
 @dataclass
-class Enter_API:
-    clock: str
-    handle: str
-    crossrate: List[Rate]
+class Enter_DATA:
+    clock: str = ""
+    handle: str = ""
+    crossrate: Optional[List[Rate]] = None
 
 
 @dataclass
 class Enter:
-    clock: str
-    dwell_ms: int
+    clock: str = ""
+    dwell_ms: int = 0
 
 #
 #
@@ -163,16 +167,16 @@ class Enter:
 #
 
 @dataclass
-class Offer_API:
-    clock: str
-    handle: str
-    demand: List[Demand]
-    supply: List[Supply]
+class Offer_DATA:
+    clock: str = ""
+    handle: str = ""
+    demand: Optional[List[Demand]] = None
+    supply: Optional[List[Supply]] = None
 
 @dataclass
 class Offer:
-    clock: str
-    dwell_ms: int
+    clock: str = ""
+    dwell_ms: int = 0
 
 #
 #
@@ -180,14 +184,14 @@ class Offer:
 #
 
 @dataclass
-class Think_API:
-    clock: str
-    handle: str
+class Think_DATA:
+    clock: str = ""
+    handle: str = ""
 
 @dataclass
 class Think:
-    clock: str
-    dwell_ms: int
+    clock: str = ""
+    dwell_ms: int = 0
 
 
 #
@@ -211,14 +215,14 @@ class Settle:
 #
 
 @dataclass
-class Leave_API:
-    clock: str
-    handle: str
+class Leave_DATA:
+    clock: str = ""
+    handle: str = ""
 
 @dataclass
 class Leave:
-    clock: str
-    dwell_ms: int
+    clock: str = ""
+    dwell_ms: int = 0
     demand: Optional[List[Demand]] = None
     supply: Optional[List[Supply]] = None
     settle: Optional[List[Settle]] = None
@@ -229,7 +233,7 @@ class Leave:
 #
 
 @dataclass
-class Manage_API:
+class Manage_DATA:
     action: Optional[Dict] = None
     values: Optional[List[Value]] = None
     genres: Optional[List[Genre]] = None
@@ -237,6 +241,7 @@ class Manage_API:
     spaces: Optional[List[Space]] = None
     things: Optional[List[Thing]] = None
     alters: Optional[List[Alter]] = None
+    brokers: Optional[List[Broker]] = None
 
 @dataclass
 class Manage:
@@ -247,4 +252,5 @@ class Manage:
     spaces: Optional[List[Space]] = None
     things: Optional[List[Thing]] = None
     alters: Optional[List[Alter]] = None
+    brokers: Optional[List[Broker]] = None
 

@@ -43,7 +43,8 @@ class Space(ObjectBase):
 
         return results
 
-
+    def get_letter(self):
+        return 'S'
 
 
 

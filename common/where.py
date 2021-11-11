@@ -5,10 +5,6 @@
 # See LICENSE.md for Additional Terms and Conditions
 
 from typing import Any, IO, Optional, List, Dict
-from pydantic.dataclasses import dataclass
-from decimal import *
-import pendulum
-
 from .base import *
 from enum import Enum
 
@@ -67,3 +63,5 @@ class Where(ObjectBase):
 
         return results
 
+    def get_letter(self):
+        return 'W'

@@ -28,3 +28,6 @@ class Genre(ObjectBase):
     tags: str = ""
     program: str = ""
     storage: str = ""
+
+    def get_letter(self):
+        return 'G'
