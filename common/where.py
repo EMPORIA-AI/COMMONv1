@@ -38,7 +38,6 @@ class Where(ObjectBase):
     """
 
     id: str = ""
-    acl: str = ""
     w3w: str = ""
     name: str = ""
     tags: str = ""

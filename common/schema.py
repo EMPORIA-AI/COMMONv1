@@ -53,7 +53,7 @@ class Setup:
     clock: str = "" # iso8601 utc time
     handle: str = "" # id for the identity this round
     version: str = ""  # the core version
-    dwell_ms: int = 0  # how long should the client wait
+    dwell: int = 0  # how long should the client wait
     vkey: str = ""  # the markets ecdsa verify key
 
 #
@@ -100,7 +100,6 @@ class Supply:
     """
 
     id: str = ""  # id assigned by the system
-    acl: str = ""
 
     price: Optional[Price] = None
 
@@ -133,7 +132,6 @@ class Demand:
     """
 
     id: str = ""
-    acl: str = ""
     vkey: str = ""  # ecdsa verifying key for later use
 
     where_id: str = ""  # location for taxes/delivery/availability
@@ -159,7 +157,7 @@ class Enter_DATA:
 @dataclass
 class Enter:
     clock: str = ""
-    dwell_ms: int = 0
+    dwell: int = 0
 
 #
 #
@@ -176,7 +174,7 @@ class Offer_DATA:
 @dataclass
 class Offer:
     clock: str = ""
-    dwell_ms: int = 0
+    dwell: int = 0
 
 #
 #
@@ -191,7 +189,7 @@ class Think_DATA:
 @dataclass
 class Think:
     clock: str = ""
-    dwell_ms: int = 0
+    dwell: int = 0
 
 
 #
@@ -222,7 +220,7 @@ class Leave_DATA:
 @dataclass
 class Leave:
     clock: str = ""
-    dwell_ms: int = 0
+    dwell: int = 0
     settle: Optional[List[Settle]] = None
 
 #

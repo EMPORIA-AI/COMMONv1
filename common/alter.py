@@ -32,7 +32,6 @@ class Alter(ObjectBase):
     """
 
     id: str = ""
-    acl: str = ""
     name: str = ""
     tags: str = ""
 

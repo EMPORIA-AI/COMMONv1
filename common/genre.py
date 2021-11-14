@@ -23,7 +23,6 @@ class Genre(ObjectBase):
     """
 
     id: str = ""
-    acl: str = ""
     name: str = ""
     tags: str = ""
     program: str = ""

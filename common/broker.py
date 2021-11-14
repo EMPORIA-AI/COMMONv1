@@ -27,7 +27,6 @@ class Broker(ObjectBase):
     """
 
     id: str = ""
-    acl: str = ""
     name: str = ""
     tags: str = ""
 
