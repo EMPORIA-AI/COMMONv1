@@ -11,12 +11,10 @@ from cubed4th import FORTH
 from dotenv import load_dotenv
 load_dotenv(verbose=True)
 
-class Agent(dict):
+class ComputerSays(dict):
 
     def __init__(self, **kwargs):
         ...
-        self.v = {}
-        self.by_name = {}
 
     @staticmethod ### OS_GETENV ###
     def word_OS_under_GETENV__R_s3(e, t, c, s1, s2):
@@ -32,13 +30,12 @@ class Agent(dict):
 
         """)
 
-        self.e.Agent = Agent()
-        self.e.import_lib(None, self.e.Agent)
+        self.e.cs = ComputerSays()
+        self.e.import_lib(None, self.e.cs)
 
         self.e.execute(code)
 
-        self.v = self.e.root.memory
-        self.by_name[name] = copy.copy(self.v)
+        self.__dict__[name] = copy.copy(self.e.root.memory)
 
 
 

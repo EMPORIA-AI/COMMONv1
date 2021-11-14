@@ -201,11 +201,11 @@ class Think:
 
 @dataclass
 class Settle:
-    supply_id: str = ""
-    supply_diag: Optional[dict] = None
-    demand_id: str = ""
-    demand_diag: Optional[dict] = None
+    thing: Optional[Thing] = None
+    supply: Optional[Supply] = None
+    demand: Optional[Demand] = None
     alters: Optional[List[Alter]] = None
+    choices: Optional[dict] = None
 
 #
 # leave is the final leg where the results of the round are passed to all the
@@ -223,8 +223,6 @@ class Leave_DATA:
 class Leave:
     clock: str = ""
     dwell_ms: int = 0
-    demand: Optional[List[Demand]] = None
-    supply: Optional[List[Supply]] = None
     settle: Optional[List[Settle]] = None
 
 #

@@ -4,8 +4,8 @@
 # Copyright (c) 12021 - 12021 HE, Emporia.AI Pte Ltd
 # See LICENSE.md for Additional Terms and Conditions
 
-from pydantic import BaseModel
 from typing import Any, IO, Optional, List, Dict
+from pydantic import BaseModel
 
 class ObjectBase(BaseModel):
 
