@@ -6,6 +6,7 @@
 
 from typing import Any, IO, Optional, List, Dict
 from pydantic.dataclasses import dataclass
+from pydantic import BaseModel
 from decimal import *
 
 import pendulum
@@ -40,8 +41,7 @@ class Locate:
 #
 #
 
-@dataclass
-class Setup_DATA:
+class Setup_DATA(BaseModel):
     clock: str = "" # iso8601 utc time just before request was sent
     version: str = ""  # the sdk version
     edition: str = ""  # config | supply | demand | trader | govern | observ
@@ -49,12 +49,12 @@ class Setup_DATA:
     broker_id: str = ""
     vkey: str = "" # the brokers ecdsa verify key encoded
 
-@dataclass
-class Setup:
+class Setup(BaseModel):
     clock: str = "" # iso8601 utc time
     handle: str = "" # id for the identity this round
     version: str = ""  # the core version
-    dwell: int = 0  # how long should the client wait
+    dwell: float = 0  # how long should the client wait
+    next: str = "" # what is the next leg, blank when hold
     vkey: str = ""  # the markets ecdsa verify key
 
 #
@@ -158,7 +158,7 @@ class Enter_DATA:
 @dataclass
 class Enter:
     clock: str = ""
-    dwell: int = 0
+    dwell: float = 0
 
 #
 #
@@ -175,7 +175,7 @@ class Offer_DATA:
 @dataclass
 class Offer:
     clock: str = ""
-    dwell: int = 0
+    dwell: float = 0
 
 #
 #
@@ -190,7 +190,7 @@ class Think_DATA:
 @dataclass
 class Think:
     clock: str = ""
-    dwell: int = 0
+    dwell: float = 0
 
 
 #
@@ -221,7 +221,7 @@ class Leave_DATA:
 @dataclass
 class Leave:
     clock: str = ""
-    dwell: int = 0
+    dwell: float = 0
     settle: Optional[List[Settle]] = None
 
 #
