@@ -229,8 +229,7 @@ class Leave:
 # operations to be multiplexed over a single endpoint.
 #
 
-@dataclass
-class Manage_DATA:
+class Manage_DATA(BaseModel):
     action: Optional[Dict] = None
     values: Optional[List[Value]] = None
     genres: Optional[List[Genre]] = None
@@ -241,8 +240,7 @@ class Manage_DATA:
     brokers: Optional[List[Broker]] = None
     keepers: Optional[List[Keeper]] = None
 
-@dataclass
-class Manage:
+class Manage(BaseModel):
     result: Optional[Dict] = None
     values: Optional[List[Value]] = None
     genres: Optional[List[Genre]] = None
