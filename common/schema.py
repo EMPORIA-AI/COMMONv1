@@ -1,15 +1,31 @@
 #!/usr/bin/env python3
 # -*- encoding: utf-8
-# SPDX-License-Identifier: CC0-1.0 & Additional T&Cs
-# Copyright (c) 12021 - 12021 HE, Emporia.AI Pte Ltd
-# See LICENSE.md for Additional Terms and Conditions
+# SPDX-License-Identifier: Elastic-2.0
+# Copyright (c) 12020 - 12022 HE, Emporia.AI Pte Ltd
+
+__banner__ = """
+
+
+
+
+
+
+
+
+
+
+
+
+
+""" # __banner__
 
 from typing import Any, IO, Optional, List, Dict
 from pydantic.dataclasses import dataclass
+from pydantic.json import pydantic_encoder
 from pydantic import BaseModel
 from decimal import *
 
-import pendulum
+import pendulum, json
 
 from .base import *
 
@@ -49,6 +65,11 @@ class Setup_DATA(BaseModel):
     broker_id: str = ""
     vkey: str = "" # the brokers ecdsa verify key encoded
 
+    def trace(self, ctx):
+        kw = json.loads(json.dumps(self, default=pydantic_encoder))
+        ctx.log(message_type="Setup_DATA", **kw)
+
+
 class Setup(BaseModel):
     clock: str = "" # iso8601 utc time
     handle: str = "" # id for the identity this round
@@ -56,6 +77,10 @@ class Setup(BaseModel):
     dwell: float = 0  # how long should the client wait
     next: str = "" # what is the next leg, blank when hold
     vkey: str = ""  # the markets ecdsa verify key
+
+    def trace(self, ctx):
+        kw = json.loads(json.dumps(self, default=pydantic_encoder))
+        ctx.log(message_type="Setup", **kw)
 
 #
 # Price is separated out from the programs as they cannot look at or change
@@ -154,11 +179,20 @@ class Enter_DATA:
     handle: str = ""
     crossrate: Optional[List[Rate]] = None
 
+    def trace(self, ctx):
+        kw = json.loads(json.dumps(self, default=pydantic_encoder))
+        ctx.log(message_type="Enter_DATA", **kw)
+
 
 @dataclass
 class Enter:
     clock: str = ""
     dwell: float = 0
+
+    def trace(self, ctx):
+        kw = json.loads(json.dumps(self, default=pydantic_encoder))
+        ctx.log(message_type="Enter", **kw)
+
 
 #
 #
@@ -172,10 +206,39 @@ class Offer_DATA:
     demand: Optional[List[Demand]] = None
     supply: Optional[List[Supply]] = None
 
+    def trace(self, ctx):
+
+        ctx.log(message_type="Offer_DATA", clock=self.clock, handle=self.handle)
+
+        if self.demand:
+            for demand in self.demand:
+                kw = json.loads(json.dumps(demand, default=pydantic_encoder))
+                lineno = 0
+                for line in kw['program'].split('\n'):
+                    kw["program_{0:0>4}".format(lineno)] = line
+                    lineno += 1
+                del kw['program']
+                ctx.log(message_type="Offer_demand", **kw)
+
+        if self.supply:
+            for supply in self.supply:
+                kw = json.loads(json.dumps(supply, default=pydantic_encoder))
+                lineno = 0
+                for line in kw['program'].split('\n'):
+                    kw["program_{0:0>4}".format(lineno)] = line
+                    lineno += 1
+                del kw['program']
+                ctx.log(message_type="Offer_supply", **kw)
+
+
 @dataclass
 class Offer:
     clock: str = ""
     dwell: float = 0
+
+    def trace(self, ctx):
+
+        ctx.log(message_type="Offer", clock=self.clock, dwell=self.dwell)
 
 #
 #
@@ -187,10 +250,18 @@ class Think_DATA:
     clock: str = ""
     handle: str = ""
 
+    def trace(self, ctx):
+        kw = json.loads(json.dumps(self, default=pydantic_encoder))
+        ctx.log(message_type="Think_DATA", **kw)
+
 @dataclass
 class Think:
     clock: str = ""
     dwell: float = 0
+
+    def trace(self, ctx):
+        kw = json.loads(json.dumps(self, default=pydantic_encoder))
+        ctx.log(message_type="Think", **kw)
 
 
 #
@@ -204,7 +275,7 @@ class Settle:
     supply: Optional[Supply] = None
     demand: Optional[Demand] = None
     alters: Optional[List[Alter]] = None
-    choices: Optional[dict] = None
+    choices: Optional[Dict] = None
 
 #
 # leave is the final leg where the results of the round are passed to all the
@@ -218,11 +289,42 @@ class Leave_DATA:
     clock: str = ""
     handle: str = ""
 
+    def trace(self, ctx):
+        kw = json.loads(json.dumps(self, default=pydantic_encoder))
+        ctx.log(message_type="Leave_DATA", **kw)
+
+
 @dataclass
 class Leave:
     clock: str = ""
     dwell: float = 0
     settle: Optional[List[Settle]] = None
+
+    def trace(self, ctx):
+        kw = json.loads(json.dumps(self, default=pydantic_encoder))
+
+        if kw['settle']:
+            for settle in kw['settle']:
+                if settle['supply']:
+                    lineno = 0
+                    for line in settle['supply']['program'].split('\n'):
+                        settle['supply']["program_{0:0>4}".format(lineno)] = line
+                        lineno += 1
+                    del settle['supply']['program']
+                if settle['demand']:
+                    lineno = 0
+                    for line in settle['demand']['program'].split('\n'):
+                        settle['demand']["program_{0:0>4}".format(lineno)] = line
+                        lineno += 1
+                    del settle['demand']['program']
+                if settle['thing']:
+                    lineno = 0
+                    for line in settle['thing']['program'].split('\n'):
+                        settle['thing']["program_{0:0>4}".format(lineno)] = line
+                        lineno += 1
+                    del settle['thing']['program']
+
+        ctx.log(message_type="Leave", **kw)
 
 #
 # the batching protocol allows for all the create, read, update and delete
